@@ -1,18 +1,19 @@
 package com.controller;
 
+import com.config.Properties;
+import com.config.Utils;
 import com.dao.LocationDao;
 import com.dao.UserDao;
 import com.dto.UserDto;
+import com.entity.Attachment;
 import com.entity.Location;
 import com.entity.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class UserController {
         return "user/create";
     }
     @PostMapping("/store")
-    public String storeUser(Model model, @ModelAttribute("userDto")UserDto userDto){
+    public String storeUser(Model model, @ModelAttribute("userDto")UserDto userDto, @RequestParam("image") MultipartFile file){
       /*
         User user = new User();
         BeanUtils.copyProperties(userDto,user);
@@ -47,11 +48,16 @@ public class UserController {
         return "user/show";
       */
         Location location = locationDao.getByName(userDto.getLocation());
+
+        //Attachment attachment = Utils.saveFile(file, Properties.USER_FOLDER);
+        Attachment attachment = Utils.saveFile(file, Properties.USER_FOLDER);
+
         User user = new User();
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
         user.setLocation(location);
+        user.setAttachment(attachment);
         userDao.store(user);
         location.getUserList().add(user);
         locationDao.update(location);

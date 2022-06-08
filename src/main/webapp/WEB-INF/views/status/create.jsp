@@ -41,6 +41,7 @@
 
                 <br>
 
+                <input type="file" name="images" multiple="multiple" accept="image/*"/>
                 <%--<form:input type="file" name="profile_photo" placeholder="Photo" path="attachment" capture=""/>--%>
 
                 <button type="submit" class="btn btn-danger mt-4">Create</button>

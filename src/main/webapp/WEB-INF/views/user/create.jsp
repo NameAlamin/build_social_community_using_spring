@@ -40,9 +40,9 @@
             <%--====================== locatonList asche Controller theke--%>
     </form:select>
 
-    <br>
+    <br><br>
 
-<%--    <input type="file" name="image" accept="image/*"/>--%>
+    <input type="file" name="image" accept="image/*"/>
 
     <button type="submit" class="btn btn-danger mt-4">Create</button>
 </form:form>

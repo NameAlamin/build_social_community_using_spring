@@ -22,9 +22,10 @@
             <th class="th">Email</th>
             <th class="th">Password</th>
             <th class="th">Location</th>
+            <th class="th">Attachment Path</th>
             <th class="th">Update</th>
             <th class="th">Delete</th>
-<%--            <th class="th">Attachment Path</th>--%>
+
 
         </tr>
         </thead>
@@ -37,10 +38,10 @@
                 <td class="td">${user.getEmail()}</td>
                 <td class="td">${user.getPassword()}</td>
                 <td class="td">${user.getLocation().getLocationName()}</td>
+                <td class="td">${user.getAttachment().getAttachmentPath()}</td>
                 <td><a class="btn btn-success" href="edit?id=${user.getId()}">Update</a></td>
                 <td><a class="btn btn-danger" href="deleted?id=${user.getId()}">Delete</a></td>
-<%--                <td class="td">${user.getAttachment().getAttachmentPath()}</td>  // userDao ai value expect
-                       korbe na pele all value null hisebe jabe--%>
+<%--                userDao ai value expect korbe na pele all value null hisebe jabe--%>
             </tr>
         </c:forEach>
         </tbody>
