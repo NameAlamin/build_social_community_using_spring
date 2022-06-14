@@ -17,7 +17,7 @@ public class SecurityConfig {
     public void configure(AuthenticationManagerBuilder managerBuilder) throws Exception {
         managerBuilder.inMemoryAuthentication()
                 .withUser("alamin")
-                .password("{noop}12345")
+                .password("{noop}1234")
                 .roles("ADMIN");
     }
     @Bean

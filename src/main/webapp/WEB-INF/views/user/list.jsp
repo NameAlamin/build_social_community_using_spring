@@ -42,8 +42,8 @@
                 <td class="td">${user.getAttachment().getAttachmentPath()}</td>
                 <td class="td"><img src="/images/${user.getAttachment().getAttachmentPath()}" alt="" height="50px" width="50px" style="object-fit: cover"/></td>
 
-                <td><a class="btn btn-success" href="/user/create">Update</a></td>
-                <td><a class="btn btn-danger" href="#">Delete</a></td>
+                <td><a class="btn btn-success" href="/user/update/${user.getId()}">Update</a></td>
+                <td><a class="btn btn-danger" href="/user/delete/${user.getId()}">Delete</a></td>
 
 <%--                 userDao ai value expect  korbe na pele all value null hisebe jabe--%>
             </tr>

@@ -8,4 +8,5 @@ public class UserDto {
     String email;
     String password;
     String location;
+    Long id;
 }

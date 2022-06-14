@@ -3,10 +3,12 @@ package com.controller;
 import com.config.Properties;
 import com.config.Utils;
 import com.dao.LocationDao;
+import com.dao.StatusDao;
 import com.dao.UserDao;
 import com.dto.UserDto;
 import com.entity.Attachment;
 import com.entity.Location;
+import com.entity.Status;
 import com.entity.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,4 +72,51 @@ public class UserController {
         model.addAttribute("userList",userList);
         return "user/list";
     }
+
+    @GetMapping("/update/{id}")
+    public String update(Model model, @PathVariable("id") String id){
+
+        User user = userDao.getById(Long.parseLong(id));
+
+        List<Location> locationList = locationDao.getAll();
+        List<String> stringLocationList = new ArrayList<>();
+        for(Location location: locationList){
+            stringLocationList.add(location.getLocationName());
+        }
+        model.addAttribute("stringLocationList",stringLocationList);
+
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setName(user.getName());
+        userDto.setEmail(user.getEmail());
+        userDto.setPassword(user.getPassword());
+        userDto.setLocation(user.getLocation().getLocationName());
+        model.addAttribute("userDto",userDto);
+
+        return "user/update";
+    }
+
+    @PostMapping("/update")
+    public String updateNow(Model model, @ModelAttribute("userDto") UserDto userDto){
+        Location location = locationDao.getByName(userDto.getLocation());
+
+        Long id = userDto.getId();
+//        It is creating a totally new user
+//        Status status = new Status();
+        User user = userDao.getById(id);
+        user.setId(userDto.getId());
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(userDto.getPassword());
+        user.setLocation(location);
+        userDao.update(user);
+
+        return "redirect:/user/list";
+    }
+    @GetMapping(value = "/delete/{id}")
+    public String update(Model model, @PathVariable("id") Long id) {
+        userDao.delete(id);
+        return "redirect:/user/list";
+    }
+
 }

@@ -95,8 +95,8 @@ public class StatusController {
         }
         List<String> privacyList = new ArrayList<>(List.of("public","private"));
         model.addAttribute("privacyList",privacyList);
-
         model.addAttribute("stringLocationList", stringLocationList);
+
         StatusDto statusDto = new StatusDto();
         statusDto.setId(status.getId());
         statusDto.setTitle(status.getTitle());
@@ -134,6 +134,6 @@ public class StatusController {
     @GetMapping(value = "/delete/{id}")
     public String update(Model model, @PathVariable("id") Long id) {
         statusDao.delete(id);
-        return "status/list";
+        return "redirect:/status/list";
     }
 }

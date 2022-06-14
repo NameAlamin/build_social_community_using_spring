@@ -1,6 +1,7 @@
 package com.dao;
 
 import com.entity.Location;
+import com.entity.Status;
 import com.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -33,5 +34,26 @@ public class UserDao {
 //                .createQuery("SELECT FROM User",User.class); -> for this line get error why?
         List<User> userList = query.list();
         return userList;
+    }
+    public void update(User user) {
+        Session session = sessionFactory.getCurrentSession();
+        try {
+            session.saveOrUpdate(user);
+//            id = status.getId();
+        }catch (Exception e){
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
+        session.flush();
+    }
+
+    public void delete(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        User user = session.load(User.class, id);
+        session.delete(user);
+        session.flush();
+    }
+    public User getById(Long id) {
+        return sessionFactory.getCurrentSession().get(User.class, id);
     }
 }
