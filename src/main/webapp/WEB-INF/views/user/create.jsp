@@ -34,6 +34,13 @@
         <form:input type="password" cssClass="form-control" id="password" placeholder="Password" path="password"/>
     </div>
 
+    <div class="form-group">
+        <form:select path="role" class="form-select">
+            <form:option value="Select Role" disabled="true" selected="true"/>
+            <form:options items="${roleList}"/>
+        </form:select>
+    </div>
+
     <form:select cssClass="dropdown" path="location">
         <form:option selected="true" value="Select Location" disabled="true"/>
         <form:options items="${locationList}"/>

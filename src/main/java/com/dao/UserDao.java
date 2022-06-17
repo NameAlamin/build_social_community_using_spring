@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -32,7 +33,7 @@ public class UserDao {
         Query query = sessionFactory.getCurrentSession()
                 .createQuery("SELECT l FROM User l", User.class);
 //                .createQuery("SELECT FROM User",User.class); -> for this line get error why?
-        List<User> userList = query.list();
+        List<User> userList = query.getResultList();
         return userList;
     }
     public void update(User user) {
@@ -56,4 +57,24 @@ public class UserDao {
     public User getById(Long id) {
         return sessionFactory.getCurrentSession().get(User.class, id);
     }
+
+
+    public User findByUsername(String username) throws UsernameNotFoundException {
+        Session session = sessionFactory.getCurrentSession();
+        User user = null;
+
+        try {
+            String hql = "FROM User WHERE name= :name";
+
+            Query query = session.createQuery(hql, User.class).setParameter("name", username);
+            user = (User) query.getSingleResult();
+        }catch (Exception e){
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
+        session.flush();
+        return user;
+    }
+
+
 }

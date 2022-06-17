@@ -1,5 +1,6 @@
 package com.entity;
 
+import com.Role;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,6 +22,10 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="role")
+    private Role role;
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL) // error ocered for missing cascade but why?
     @JoinColumn(name = "attachment_id",referencedColumnName = "id")
