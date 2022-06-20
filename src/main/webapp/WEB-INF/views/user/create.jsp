@@ -51,7 +51,7 @@
 
     <input type="file" name="image" accept="image/*"/>
 
-    <button type="submit" class="btn btn-danger mt-4">Create</button>
+    <button type="submit" class="btn btn-warning mt-4">Create</button>
 </form:form>
 </body>
 </html>
