@@ -21,6 +21,7 @@
             <th class="th">Name</th>
             <th class="th">Email</th>
             <th class="th">Password</th>
+            <th class="th">Role</th>
             <th class="th">Location</th>
             <th class="th">Attachment Path</th>
             <th class="th">Image</th>
@@ -38,6 +39,7 @@
                 <td class="td">${user.getName()}</td>
                 <td class="td">${user.getEmail()}</td>
                 <td class="td">${user.getPassword()}</td>
+                <td class="td">${user.getRole().name()}</td>
                 <td class="td">${user.getLocation().getLocationName()}</td>
                 <td class="td">${user.getAttachment().getAttachmentPath()}</td>
                 <td class="td"><img src="/images/${user.getAttachment().getAttachmentPath()}" alt="" height="50px" width="50px" style="object-fit: cover"/></td>

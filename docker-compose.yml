@@ -1,0 +1,89 @@
+version: '3.8'
+services:
+  social_community_web:
+    container_name: 'social_community_web'
+    image: 'social_community_image'
+    build: ./
+    ports:
+      - '8083:8080'
+    depends_on:
+      - social_community_db
+    command: catalina.sh run
+
+    environment:
+      # The inside port will be used by the dependent services
+      SPRING_DATASOURCE_URL: jdbc:postgresql://social_community_db:5432/social_community_v3
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: alamin
+      SERVER_PORT: 8083
+    networks:
+      - social_community_network
+
+  social_community_db:
+    image: 'postgres'
+    container_name: 'social_community_db'
+    volumes:
+#      - pgdata:/var/lib/postgresql/data
+      - type: volume
+        source: social_community
+        target: "$PWD/Documents/docker_data/social_community_db"
+    ports:
+      - '5433:5432'
+    environment:
+      - 'POSTGRES_PASSWORD=alamin'
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_DB=social_community_v3'
+    networks:
+      - social_community_network
+#    extra_hosts:
+#      - 'qaboard_network:192.168.1.107'
+
+volumes:
+  social_community:
+networks:
+  social_community_network:
+
+
+
+#version: '3.8'
+#services:
+#  qa_board_service:
+#    container_name: 'qa_board'
+#    image: 'mainul35/university-qa-board'
+#    build: ./
+#    ports:
+#      - '8083:8080'
+#    depends_on:
+#      - qaboard_db
+#    command: catalina.sh run
+#    # Pass environment variables to the service
+#    environment:
+#      # The inside port will be used by the dependent services
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://qaboard_db:5432/qabord_db
+#      SPRING_DATASOURCE_USERNAME: postgres
+#      SPRING_DATASOURCE_PASSWORD: postgres
+#      SERVER_PORT: 8083
+#    networks:
+#      - qaboard_netwok
+#  qaboard_db:
+#    image: 'postgres'
+#    container_name: 'qaboard_db'
+#    volumes:
+#      - type: volume
+#        source: qabord
+#        target: "$PWD/Documents/docker_data/qaboard_data"
+#    ports:
+#      - '5433:5432'
+#    environment:
+#      - 'POSTGRES_PASSWORD=postgres'
+#      - 'POSTGRES_USER=postgres'
+#      - 'POSTGRES_DB=qabord_db'
+#    networks:
+#      - qaboard_netwok
+#    extra_hosts:
+#      - 'qaboard_network:192.168.1.107'
+#
+#volumes:
+#  qabord:
+#networks:
+#  qaboard_netwok:

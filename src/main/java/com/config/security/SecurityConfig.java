@@ -34,8 +34,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((authz)->authz.anyRequest().authenticated())
-                .httpBasic(withDefaults());
+                .authorizeRequests(auth -> auth
+                        .antMatchers("/resources/**", "/temp/**","/css/**").permitAll()
+                        .antMatchers( "/login").permitAll()
+                        .antMatchers(("/location/**")).hasAuthority("ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll()
+                        .usernameParameter("username")
+                        .passwordParameter("password")
+                        .loginProcessingUrl("/login-process")
+                        .permitAll()
+                );
+//                .authorizeHttpRequests((authz)->authz.anyRequest().authenticated())
+//                .httpBasic(withDefaults());
         return http.build();
     }
 }
