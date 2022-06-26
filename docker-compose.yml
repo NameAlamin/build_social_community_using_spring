@@ -35,8 +35,8 @@ services:
       - 'POSTGRES_DB=social_community_v3'
     networks:
       - social_community_network
-#    extra_hosts:
-#      - 'qaboard_network:192.168.1.107'
+    extra_hosts:
+      - 'social_community_network:192.168.1.104'
 
 volumes:
   social_community:
